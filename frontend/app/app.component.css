@@ -1,0 +1,13 @@
+.buttonContainer{
+  width: 100%;
+  display: flex;
+}
+.button{
+  flex: 1;
+  font-size: 15px;
+}
+.siteTitle{
+  font-style: italic;
+  text-shadow: 2px 2px black;
+  color: red;
+}

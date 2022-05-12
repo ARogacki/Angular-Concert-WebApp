@@ -1,0 +1,19 @@
+.main-container{
+  text-align: center;
+}
+
+.card{
+  width: 400px;
+  margin: 200px auto 0px;
+}
+.form-container{
+  width: 400px;
+  margin: 200px auto 0px;
+}
+
+.form-field{
+  display: block
+}
+.editButton{
+  font-size: 20px;
+}

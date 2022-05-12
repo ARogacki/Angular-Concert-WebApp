@@ -1,0 +1,52 @@
+<div *ngIf="creationSuccessful">
+  Successfully created a concert!
+</div>
+
+<div *ngIf="username && !creationSuccessful" class = "login-container">
+  <div class="form-container">
+    <form name="form" (ngSubmit)="main.form.valid && onSubmit()" #main="ngForm" novalidate>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Band name</mat-label>
+        <input matInput value = "{{username}}" disabled>
+      </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Genre</mat-label>
+        <input matInput [(ngModel)]="form.genre" name="genre" #genre="ngModel" required>
+        <mat-error *ngIf="main.submitted && genre.invalid">
+          <span *ngIf="genre.errors.required">Genre required</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matNativeControl [(ngModel)]="form.description" name="description" #description="ngModel" required></textarea>
+        <mat-error *ngIf="main.submitted && description.invalid">
+          <span *ngIf="description.errors.required">Description required</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [owlDateTime]="myDatepicker" [(ngModel)]="form.date" name="date" #date="ngModel"  required>
+        <mat-datepicker-toggle [owlDateTimeTrigger]="myDatepicker" matSuffix></mat-datepicker-toggle>
+        <owl-date-time #myDatepicker></owl-date-time>
+        <mat-error *ngIf="main.submitted && date.invalid">
+          <span *ngIf="date.errors.required">Date required</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Ticket cost</mat-label>
+        <input matInput type="number" [(ngModel)]="form.cost" name="cost" #cost="ngModel" required min="0" max="500">
+        <mat-error *ngIf="main.submitted && cost.invalid">
+          <span *ngIf="cost.errors.required">Price required</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Ticket capacity</mat-label>
+        <input matInput type="number" [(ngModel)]="form.capacity" name="capacity" #capacity="ngModel" required min="1" max="500">
+        <mat-error *ngIf="main.submitted && capacity.invalid">
+          <span *ngIf="capacity.errors.required">Capacity required</span>
+          <span *ngIf="capacity.errors.min">Min value</span>
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Create</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div *ngIf="isLoggedIn; else loggedOut">
+  Successfully logged in!
+</div>
+
+
+<ng-template #loggedOut>
+  <div class = "login-container">
+    <div class="form-container">
+      <form name="form" (ngSubmit)="main.form.valid && onSubmit()" #main="ngForm" novalidate>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput placeholder="Username" [(ngModel)]="form.username" name="username" #username="ngModel" required
+                 minlength="3">
+          <mat-error *ngIf="main.submitted && username.invalid">
+            <span *ngIf="username.errors.required">Username required</span>
+            <span *ngIf="username.errors.minlength">Username must be at least 3 characters</span>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" placeholder="Password" [(ngModel)]="form.password" name="password" #password="ngModel" required
+                 minlength="6">
+          <mat-error *ngIf="main.submitted && password.invalid">
+            <span *ngIf="password.errors.required">Password required</span>
+            <span *ngIf="password.errors.minlength">Password must be at least 6 characters</span>
+          </mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="primary" type="submit">Login</button>
+        <mat-error *ngIf="main.submitted && isLoginFailed">Login error!<br>{{errorMessage}}</mat-error>
+      </form>
+    </div>
+  </div>
+</ng-template>

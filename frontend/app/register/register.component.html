@@ -1,0 +1,47 @@
+<div class = "register-container" *ngIf="isSignedUp; else signupForm">
+  <h3>Registration complete!</h3>
+  <h3 *ngIf="isBand; else notBand">Please wait for authorization!</h3>
+  <ng-template #notBand><h3>You can now login!</h3></ng-template>
+</div>
+
+<ng-template #signupForm>
+<div class = "register-container">
+  <div class="form-container">
+    <form name="form" (ngSubmit)="main.form.valid && onSubmit()" #main="ngForm" novalidate>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Username" [(ngModel)]="form.username" name="username" #username="ngModel" required
+               minlength="3">
+        <mat-error *ngIf="main.submitted && username.invalid">
+          <span *ngIf="username.errors.required">Username required</span>
+          <span *ngIf="username.errors.minlength">Username must be at least 3 characters</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" placeholder="Password" [(ngModel)]="form.password" name="password" #password="ngModel" required
+               minlength="6">
+        <mat-error *ngIf="main.submitted && password.invalid">
+          <span *ngIf="password.errors.required">Password required</span>
+          <span *ngIf="password.errors.minlength">Password must be at least 6 characters</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="Email@mail.com" [(ngModel)]="form.email" name="email" #email="ngModel" required>
+        <mat-error *ngIf="main.submitted && email.invalid">
+          <span *ngIf="email.errors.required">Email required</span>
+        </mat-error>
+      </mat-form-field>
+      <div class="form-field">
+        <mat-checkbox [(ngModel)]="form.role" name="role" #role="ngModel">
+          <label>Band</label>
+        </mat-checkbox>
+      </div>
+      <br>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <mat-error *ngIf="main.submitted && isSignUpFailed">Registration failed!<br>{{errorMessage}}</mat-error>
+    </form>
+  </div>
+</div>
+</ng-template>

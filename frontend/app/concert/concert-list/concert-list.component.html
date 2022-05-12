@@ -1,0 +1,49 @@
+<div *ngIf="username" class="welcome">Hello {{username}}!</div>
+
+<div class="sortOptions">
+  <mat-form-field>
+    <mat-label>band name</mat-label>
+    <input matInput  name="search" [(ngModel)]="search" (keydown.enter)="searchBand(search)">
+    <button mat-button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Sorting options</mat-label>
+    <mat-select [(value)]="sortValue" (selectionChange)="sortBy(sortValue)">
+      <mat-option value="id">id</mat-option>
+      <mat-option value="bandName">Band name</mat-option>
+      <mat-option value="genre">Genre</mat-option>
+      <mat-option value="date">Date</mat-option>
+      <mat-option value="price">Price</mat-option>
+      <mat-option value="ticketCapacity">Ticket limit</mat-option>
+    </mat-select>
+  </mat-form-field>
+    <button mat-raised-button (click)="changeOrder()" class="sortOption">Change order</button>
+</div>
+<div *ngIf="page" class="pageButtons">
+  <button [disabled]="page.first" mat-raised-button (click)="changePage(-1)">Previous</button>
+  <button [disabled]="page.last" mat-raised-button (click)="changePage(1)">Next</button>
+</div>
+<mat-grid-list cols="3" rowHeight="2:1">
+  <mat-grid-tile *ngFor="let concert of concertList">
+    <mat-card class="card" matRipple>
+      <mat-card-title><a [routerLink]="['/concert/', concert.id]">{{concert.bandName}}</a></mat-card-title>
+      <mat-card-subtitle>
+        Tickets: {{concert.ticketAmount}}/{{concert.ticketCapacity}}
+        <br>Price: {{concert.price}}
+      </mat-card-subtitle>
+      <mat-card-content>
+        <p>Description: {{concert.description}}</p>
+        <p>Genre: {{concert.genre}}</p>
+        <p>Date: {{concert.date | date}} at {{concert.date | date:'shortTime'}}</p>
+        <button mat-raised-button color="primary" *ngIf="username && username!=concert.bandName
+        && concert.ticketAmount < concert.ticketCapacity" (click)="reserveTicket(concert)">Reserve</button>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+
+

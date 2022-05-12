@@ -1,0 +1,68 @@
+<ng-container *ngIf="concert">
+  <button mat-raised-button color="primary" *ngIf="concert.bandName == username" (click)="changeEditState();" class="editButton">Edit concert</button>
+  <div class="main-container">
+    <mat-card class="card">
+      <mat-card-title>{{concert.bandName}}</mat-card-title>
+      <mat-card-subtitle>
+        Tickets: {{concert.ticketAmount}}/{{concert.ticketCapacity}}
+        <br>Price: {{concert.price}}
+      </mat-card-subtitle>
+      <mat-card-content>
+        <div *ngIf="!editMode">
+          <p>Description: {{concert.description}}</p>
+          <p>Genre: {{concert.genre}}</p>
+          <p>Date: {{concert.date | date}} at {{concert.date | date:'shortTime'}}</p>
+        </div>
+        <div *ngIf="editMode">
+        <form name="form" (ngSubmit)="onSubmit()" #main="ngForm" novalidate>
+          <mat-form-field class="fo rm-field" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matNativeControl [(ngModel)]="form.description" name="description" #description="ngModel"></textarea>
+          </mat-form-field>
+          <mat-form-field class="fo rm-field" appearance="outline">
+            <mat-label>Genre</mat-label>
+            <input matInput [(ngModel)]="form.genre" name="genre" #genre="ngModel">
+          </mat-form-field>
+          <br>
+          <button mat-raised-button color="primary" type="submit">Submit changes</button>
+        </form>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <td><button mat-raised-button color="primary" *ngIf="concert.bandName == username" (click)="deleteConcert();">Delete Concert</button></td>
+  </div>
+  <button mat-raised-button color="primary" *ngIf="username && username!=concert.bandName && concert.ticketAmount < concert.ticketCapacity" (click)="reserveTicket()">Reserve</button>
+  <mat-table *ngIf="tickets && username" [dataSource]="tickets" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="bandName">
+      <mat-header-cell *matHeaderCellDef> name </mat-header-cell>
+      <mat-cell *matCellDef="let ticket"> {{ticket.bandName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="owner">
+      <mat-header-cell *matHeaderCellDef> owner </mat-header-cell>
+      <mat-cell *matCellDef="let ticket">
+        <a *ngIf="ticket.user.publicProfile && username; else withoutLink" [routerLink]="['/user/', ticket.user.username]">{{ticket.user.username}}</a>
+        <ng-template #withoutLink>{{ticket.user.username}}</ng-template>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> price </mat-header-cell>
+      <mat-cell *matCellDef="let ticket">{{ticket.price}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef> date </mat-header-cell>
+      <mat-cell *matCellDef="let ticket">{{ticket.date | date}} at {{ticket.date | date:'shortTime'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="refund">
+      <mat-header-cell *matHeaderCellDef> refund </mat-header-cell>
+      <mat-cell *matCellDef="let ticket"><button mat-raised-button color="secondary" *ngIf="ticket.user.username == username" (click)="refundTicket(ticket);">Refund</button></mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="getDisplayedTickets();" class="header"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: getDisplayedTickets();"></mat-row>
+  </mat-table>
+</ng-container>
+

@@ -1,0 +1,25 @@
+.card{
+  width: 70%;
+  height: 80%;
+  background: ghostwhite;
+}
+mat-grid-tile {
+  background: transparent;
+}
+.welcome{
+  margin-top: 5px;
+  text-align: center;
+  font-size: 25px;
+}
+
+.sortOptions{
+  text-align: center;
+}
+
+.sortOption{
+  margin: 5px;
+}
+
+.pageButtons{
+  text-align: center;
+}

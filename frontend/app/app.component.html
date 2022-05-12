@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <div class="siteTitle" [ngStyle]="newColor" (mouseenter)="changeColor()">Feel Good inc.</div>
+    <span class = "menu-spacer"></span>
+    <div class="buttonContainer">
+      <a mat-button [routerLink]="'/home'" class="button">Main Page</a>
+      <a mat-button *ngIf="!authority" [routerLink]="'/auth/login'" class="button">Login</a>
+      <a mat-button *ngIf="!authority" [routerLink]="'/signup'" class="button">Sign up</a>
+      <a mat-button *ngIf="authority" [routerLink]="['/user/', username]" class="button">Profile</a>
+      <a mat-button *ngIf="authority === 'band'" [routerLink]="'/concert'" class="button">Create concert</a>
+      <a mat-button *ngIf="authority === 'admin'" [routerLink]="'/admin'" class="button">Admin panel</a>
+      <a mat-button *ngIf="authority" (click)="logout()" class="button">Logout</a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<router-outlet></router-outlet>
+
+

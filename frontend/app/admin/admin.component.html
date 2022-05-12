@@ -1,0 +1,30 @@
+<mat-table *ngIf="users" [dataSource]="users" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> id </mat-header-cell>
+    <mat-cell *matCellDef="let user"> {{user.id}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="username">
+    <mat-header-cell *matHeaderCellDef> username </mat-header-cell>
+    <mat-cell *matCellDef="let user"> {{user.username}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="roles">
+    <mat-header-cell *matHeaderCellDef> roles </mat-header-cell>
+    <mat-cell *matCellDef="let user" > <div *ngFor="let role of user.roles">{{role.name}}&nbsp;</div></mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="enabled">
+    <mat-header-cell *matHeaderCellDef> enabled </mat-header-cell>
+    <mat-cell *matCellDef="let user"> <button mat-raised-button color="secondary" (click)="changeUserState(user);">{{user.enabled}}</button> </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="delete">
+    <mat-header-cell *matHeaderCellDef> delete </mat-header-cell>
+    <mat-cell *matCellDef="let user"> <button mat-raised-button color="secondary" (click)="deleteUser(user);">Delete user</button> </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns" class="header"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
